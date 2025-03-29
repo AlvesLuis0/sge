@@ -2,7 +2,7 @@ class SaleMethodsController < ApplicationController
   before_action :set_sale_method, only: %i[ show update destroy ]
 
   def index
-    @sale_methods = SaleMethod.not_deleted
+    @sale_methods = SaleMethod.not_status_deleted
     render json: @sale_methods
   end
 
@@ -21,13 +21,13 @@ class SaleMethodsController < ApplicationController
   end
 
   def destroy
-    @sale_method.deleted!
+    @sale_method.status_deleted!
   end
 
   private
 
   def set_sale_method
-    @sale_method = SaleMethod.not_deleted.find(params.expect(:id))
+    @sale_method = SaleMethod.not_status_deleted.find(params.expect(:id))
   end
 
   def sale_method_params
