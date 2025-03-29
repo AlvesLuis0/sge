@@ -1,0 +1,6 @@
+pt:
+  attributes:
+    id: Código
+    description: Descrição
+    position: Posição
+    status: Status
