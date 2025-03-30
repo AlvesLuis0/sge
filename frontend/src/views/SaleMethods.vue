@@ -1,24 +1,17 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/components/Form.vue';
+import { SALE_METHOD } from '@/factory/sale-methods';
+import { STATUSES_OPTIONS } from '@/factory/statuses';
 import api from '@/service/api';
 import { ref } from 'vue';
 
-const defaultSaleMethod = () => ({
-  id: null,
-  description: null,
-  position: null,
-  status: 'active'
-});
-const saleMethod = ref(defaultSaleMethod());
+const saleMethod = ref(SALE_METHOD());
 const isSearchValueDisabled = ref(false);
-const statusesOptions = ref([
-  { description: 'Ativo', value: 'active' },
-  { description: 'Inativo', value: 'inactive' }
-]);
+const statusesOptions = ref(STATUSES_OPTIONS());
 
 const reset = () => {
-  saleMethod.value = defaultSaleMethod();
+  saleMethod.value = SALE_METHOD();
   isSearchValueDisabled.value = false;
 };
 
@@ -35,7 +28,7 @@ const searchSaleMethod = async (id) => {
     <ActionsToolbar @reset="reset" :data="saleMethod" path="/sale_methods" />
     <Form title="FORMAS DE VENDA">
       <div class="flex flex-col md:flex-row gap-4">
-        <div class="flex flex-wrap gap-2 w-full">
+        <div class="flex flex-wrap gap-2 w-2/6">
           <label for="id">Código</label>
           <InputGroup>
             <InputNumber id="id" v-model="saleMethod.id" :disabled="isSearchValueDisabled" @blur="searchSaleMethod(saleMethod.id)" />
@@ -48,13 +41,13 @@ const searchSaleMethod = async (id) => {
           <label for="description" class="required">Descrição</label>
           <InputText id="description" v-model="saleMethod.description" />
         </div>
-        <div class="flex flex-wrap gap-2 w-full">
+        <div class="flex flex-wrap gap-2 w-2/6">
           <label for="position">Posição</label>
           <InputNumber id="position" v-model="saleMethod.position" />
         </div>
-        <div class="flex flex-wrap gap-2 w-full">
+        <div class="flex flex-wrap gap-2 w-2/6">
           <label for="status" class="required">Status</label>
-          <Select id="status" v-model="saleMethod.status" :options="statusesOptions" optionLabel="description" optionValue="value" class="w-full"></Select>
+          <Select id="status" v-model="saleMethod.status" :options="statusesOptions" optionLabel="description" optionValue="value" class="w-full" />
         </div>
       </div>
     </Form>
