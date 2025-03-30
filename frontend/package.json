@@ -1,5 +1,5 @@
 {
-    "name": "sakai-vue",
+    "name": "sge-vue",
     "version": "4.3.0",
     "scripts": {
         "dev": "vite",
