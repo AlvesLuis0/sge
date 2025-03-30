@@ -1,6 +1,7 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/components/Form.vue';
+import api from '@/service/api';
 import { ref } from 'vue';
 
 const defaultSaleMethod = () => ({
@@ -22,7 +23,9 @@ const reset = () => {
 };
 
 const searchSaleMethod = async(id) => {
-  //
+  const response = await api.get('/sale_methods', id);
+  saleMethod.value = response;
+  isSearchValueDisabled.value = true;
 }
 </script>
 
