@@ -16,7 +16,7 @@ module Crud
 
       def create
         @resource = model.create!(resource_params)
-        render json: @resource, status: :created, location: @resource
+        render json: { messages: [ "Registro salvo: #{@resource.id}" ] }, status: :created, location: @resource
       end
 
       def update
@@ -26,6 +26,7 @@ module Crud
 
       def destroy
         @resource.status_deleted!
+        render json: { messages: [ "Registro excluído" ] }
       end
 
       protected

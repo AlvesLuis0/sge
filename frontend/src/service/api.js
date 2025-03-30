@@ -16,5 +16,11 @@ export default {
     path += resource.id == null ? '' : `/${resource.id}`;
     const { data } = await method(path, resource);
     return data;
-  }
+  },
+
+  async destroy(path, id) {
+    path += id == null ? '' : `/${id}`;
+    const { data } = await api.delete(path);
+    return data;
+  },
 };

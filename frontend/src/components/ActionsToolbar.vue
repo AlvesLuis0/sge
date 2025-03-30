@@ -14,8 +14,10 @@ const cancel = () => {
   emit('reset');
 };
 
-const destroy = () => {
-  console.log(path + '/' + resource.id);
+const destroy = async () => {
+  const { data } = await api.destroy(path, resource.id);
+  emit('reset');
+  return data;
 };
 </script>
 
