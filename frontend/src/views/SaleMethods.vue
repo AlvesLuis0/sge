@@ -25,7 +25,7 @@ const searchSaleMethod = async (id) => {
 
 <template>
   <div class="card">
-    <ActionsToolbar @reset="reset" :data="saleMethod" path="/sale_methods" />
+    <ActionsToolbar @reset="reset" :resource="saleMethod" path="/sale_methods" />
     <Form title="FORMAS DE VENDA">
       <div class="flex flex-col md:flex-row gap-4">
         <div class="flex flex-wrap gap-2 w-2/6">

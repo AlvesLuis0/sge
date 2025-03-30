@@ -15,7 +15,6 @@ export default {
     const method = resource.id == null ? api.post : api.put;
     path += resource.id == null ? '' : `/${resource.id}`;
     const { data } = await method(path, resource);
-    console.log(data);
     return data;
   }
 };
