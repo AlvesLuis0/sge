@@ -6,7 +6,8 @@ const api = axios.create({
 
 export default {
   async get(path, id) {
-    const { data } = await api.get(`${path}/${id}`);
+    path += id == null ? '' : `/${id}`;
+    const { data } = await api.get(path);
     return data;
   },
 

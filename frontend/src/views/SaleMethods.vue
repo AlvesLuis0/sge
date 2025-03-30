@@ -22,11 +22,12 @@ const reset = () => {
   isSearchValueDisabled.value = false;
 };
 
-const searchSaleMethod = async(id) => {
+const searchSaleMethod = async (id) => {
+  if (id == null) return;
   const response = await api.get('/sale_methods', id);
   saleMethod.value = response;
   isSearchValueDisabled.value = true;
-}
+};
 </script>
 
 <template>
