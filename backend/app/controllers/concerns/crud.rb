@@ -21,7 +21,7 @@ module Crud
 
       def update
         @resource.update!(resource_params)
-        render json: @resource
+        render json: { messages: [ "Registro salvo: #{@resource.id}" ] }
       end
 
       def destroy

@@ -22,5 +22,5 @@ export default {
     path += id == null ? '' : `/${id}`;
     const { data } = await api.delete(path);
     return data;
-  },
+  }
 };

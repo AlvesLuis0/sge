@@ -1,24 +1,29 @@
 <script setup>
 import api from '@/service/api';
-import { confirmation } from '@/utils/dialog';
-import { useConfirm } from 'primevue';
+import { dialogConfirmation, dialogMessages } from '@/utils/dialog';
+import { useConfirm, useDialog } from 'primevue';
 
 const emit = defineEmits(['reset']);
 const { path, resource, isResourceLoaded } = defineProps(['path', 'resource', 'isResourceLoaded']);
 const confirm = useConfirm();
+const dialog = useDialog();
 
 const save = async () => {
-  const { data } = await api.save(path, resource);
-  emit('reset');
-  return data;
+  try {
+    const data = await api.save(path, resource);
+    dialogMessages(dialog, data.messages);
+    emit('reset');
+  } catch (error) {
+    dialogMessages(dialog, error.response.data.errors);
+  }
 };
 
 const cancel = () => {
-  confirmation(confirm, () => emit('reset'));
+  dialogConfirmation(confirm, () => emit('reset'));
 };
 
 const destroy = () => {
-  confirmation(confirm, async () => {
+  dialogConfirmation(confirm, async () => {
     const { data } = await api.destroy(path, resource.id);
     emit('reset');
     return data;

@@ -4,6 +4,8 @@ import Form from '@/components/Form.vue';
 import { SALE_METHOD } from '@/factory/sale-methods';
 import { STATUSES_OPTIONS } from '@/factory/statuses';
 import api from '@/service/api';
+import { dialogMessages } from '@/utils/dialog';
+import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
 
 const saleMethod = ref(SALE_METHOD());
@@ -15,11 +17,17 @@ const reset = () => {
   isSaleMethodLoaded.value = false;
 };
 
+const dialog = useDialog();
+
 const searchSaleMethod = async (id) => {
-  if (id == null) return;
-  const response = await api.get('/sale_methods', id);
-  saleMethod.value = response;
-  isSaleMethodLoaded.value = true;
+  try {
+    if (id == null) return;
+    const response = await api.get('/sale_methods', id);
+    saleMethod.value = response;
+    isSaleMethodLoaded.value = true;
+  } catch (error) {
+    dialogMessages(dialog, error.response.data.errors);
+  }
 };
 </script>
 
