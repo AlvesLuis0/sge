@@ -24,9 +24,13 @@ const cancel = () => {
 
 const destroy = () => {
   dialogConfirmation(confirm, async () => {
-    const { data } = await api.destroy(path, resource.id);
-    emit('reset');
-    return data;
+    try {
+      const data = await api.destroy(path, resource.id);
+      dialogMessages(dialog, data.messages);
+      emit('reset');
+    } catch (error) {
+      dialogMessages(dialog, error.response.data.errors);
+    }
   });
 };
 </script>
