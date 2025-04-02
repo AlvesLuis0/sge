@@ -49,7 +49,7 @@ const searchSaleMethod = async (id) => {
 
     <div class="md:col-span-6">
       <label for="description" class="required">Descrição</label>
-      <InputText id="description" v-model="saleMethod.description" />
+      <InputText id="description" v-model="saleMethod.description" maxlength="60" />
     </div>
 
     <div class="md:col-span-2">
