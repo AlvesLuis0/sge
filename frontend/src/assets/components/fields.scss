@@ -2,3 +2,7 @@
   content: '*';
   color: red;
 }
+
+.p-inputtext, .p-inputnumber, .p-select {
+  @apply w-full;
+}

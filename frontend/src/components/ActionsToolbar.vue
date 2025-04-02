@@ -34,9 +34,11 @@ const destroy = () => {
 <template>
   <Toolbar>
     <template #start>
-      <Button label="Salvar" icon="pi pi-save" severity="success" class="mr-2" @click="save" />
-      <Button label="Cancelar" icon="pi pi-save" severity="warn" class="mr-2" @click="cancel" />
-      <Button label="Deletar" icon="pi pi-trash" severity="danger" @click="destroy" :disabled="!isResourceLoaded" />
+      <div class="grid sm:grid-cols-3 grid-cols-1 gap-2">
+        <Button label="Salvar" icon="pi pi-save" severity="success" class="col-span-1" @click="save" />
+        <Button label="Cancelar" icon="pi pi-save" severity="warn" class="col-span-1" @click="cancel" />
+        <Button label="Deletar" icon="pi pi-trash" severity="danger" class="col-span-1" @click="destroy" :disabled="!isResourceLoaded" />
+      </div>
     </template>
   </Toolbar>
 </template>
