@@ -1,6 +1,6 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
-import Form from '@/components/Form.vue';
+import Form from '@/layout/Form.vue';
 import { SALE_METHOD_DEFAULT } from '@/factory/sale-methods';
 import { STATUSES_OPTIONS } from '@/factory/statuses';
 import api from '@/service/api';
