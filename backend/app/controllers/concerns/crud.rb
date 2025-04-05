@@ -6,8 +6,18 @@ module Crud
       before_action :set_resource, only: %i[ show update destroy ]
 
       def index
-        @resources = model.not_status_deleted
-        render json: @resources
+        @resources = model
+          .not_status_deleted
+          .page(params[:page])
+        render json: {
+          resources: @resources,
+          meta: {
+            total_pages: @resources.total_pages,
+            per_page: @resources.default_per_page,
+            total_count: @resources.total_count,
+            current_page: @resources.current_page
+          }
+        }
       end
 
       def show

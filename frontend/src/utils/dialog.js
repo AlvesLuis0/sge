@@ -8,13 +8,26 @@ const customDialog = (context, view, options) => {
   context.open(view, options);
 };
 
+export const searchDialog = (context, resource) => {
+  customDialog(
+    context,
+    defineAsyncComponent(() => import(`@/components/${resource}/${resource}Dialog.vue`)),
+    {
+      props: {
+        header: 'PESQUISAR',
+        modal: true
+      }
+    }
+  );
+};
+
 export const dialogMessages = (context, messages) => {
   customDialog(
     context,
     defineAsyncComponent(() => import('@/components/DialogList.vue')),
     {
       props: {
-        header: 'Informação',
+        header: 'INFORMAÇÃO',
         modal: true
       },
       data: { items: messages }
@@ -25,7 +38,7 @@ export const dialogMessages = (context, messages) => {
 export const dialogConfirmation = (context, accept) =>
   dialog(context, {
     message: 'Tem certeza que deseja fazer isso?',
-    header: 'Confirmação',
+    header: 'CONFIRMAÇÃO',
     icon: 'pi pi-info-circle',
     rejectProps: {
       label: 'Cancelar',

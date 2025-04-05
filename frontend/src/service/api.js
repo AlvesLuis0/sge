@@ -5,8 +5,9 @@ const api = axios.create({
 });
 
 export default {
-  async get(path, id) {
+  async get(path, id, params = {}) {
     path += id == null ? '' : `/${id}`;
+    path += '?' + new URLSearchParams(params).toString();
     const { data } = await api.get(path);
     return data;
   },

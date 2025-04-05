@@ -1,4 +1,4 @@
-export const STATUSES_OPTIONS = () => [
-  { description: 'Ativo', value: 'active' },
-  { description: 'Inativo', value: 'inactive' }
-];
+export const STATUSES = Object.freeze({
+  active: { value: 'active', description: 'Ativo', severity: 'success' },
+  inactive: { value: 'inactive', description: 'Inativo', severity: 'warn' }
+});

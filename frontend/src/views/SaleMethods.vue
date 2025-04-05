@@ -2,15 +2,14 @@
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
 import { SALE_METHOD_DEFAULT } from '@/factory/sale-methods';
-import { STATUSES_OPTIONS } from '@/factory/statuses';
 import api from '@/service/api';
-import { dialogMessages } from '@/utils/dialog';
+import { dialogMessages, searchDialog } from '@/utils/dialog';
 import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
+import { STATUSES } from '@/factory/statuses';
 
 const saleMethod = ref(SALE_METHOD_DEFAULT());
 const isSaleMethodLoaded = ref(false);
-const statusesOptions = ref(STATUSES_OPTIONS());
 
 const reset = () => {
   saleMethod.value = SALE_METHOD_DEFAULT();
@@ -29,6 +28,10 @@ const searchSaleMethod = async (id) => {
     dialogMessages(dialog, error.response.data.errors);
   }
 };
+
+const openSaleMethodDialog = () => {
+  searchDialog(dialog, 'SaleMethods');
+};
 </script>
 
 <template>
@@ -41,7 +44,7 @@ const searchSaleMethod = async (id) => {
       <label for="id">Código</label>
       <InputGroup>
         <InputNumber id="id" v-model="saleMethod.id" :disabled="isSaleMethodLoaded" @blur="searchSaleMethod(saleMethod.id)" />
-        <Button severity="secondary">
+        <Button severity="secondary" @click="openSaleMethodDialog">
           <i class="pi pi-search"></i>
         </Button>
       </InputGroup>
@@ -59,7 +62,7 @@ const searchSaleMethod = async (id) => {
 
     <div class="md:col-span-2">
       <label for="status" class="required">Status</label>
-      <Select id="status" v-model="saleMethod.status" :options="statusesOptions" optionLabel="description" optionValue="value" />
+      <Select id="status" v-model="saleMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
     </div>
   </Form>
 </template>
