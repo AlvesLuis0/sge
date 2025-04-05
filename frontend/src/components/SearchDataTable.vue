@@ -4,20 +4,27 @@ import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   path: String,
+  searchParam: {
+    type: String,
+    default: () => 'q[description_cont]'
+  },
   params: {
     type: Object,
-    default: () => {}
+    default: () => ({})
   }
 });
 
 const resources = ref([]);
-const page = ref(0);
+const page = ref(1);
+const search = ref('');
 const isLoading = ref(false);
 const meta = ref({ totalPages: 0, perPage: 0, totalCount: 0, currentPage: 1 });
 
 const fetchResources = async () => {
   isLoading.value = true;
-  const data = await api.get(props.path, null, { page: page.value, ...props.params });
+  const params = { ...props.params, page: page.value };
+  params[props.searchParam] = search.value;
+  const data = await api.get(props.path, null, params);
   resources.value = data.resources;
   meta.value = {
     totalPages: data.meta.total_pages,
@@ -37,7 +44,21 @@ onMounted(fetchResources);
 </script>
 
 <template>
-  <DataTable lazy :value="resources" paginator :rows="meta.perPage" :totalRecords="meta.totalCount" :loading="isLoading" @page="onPageChange($event)">
-    <slot></slot>
-  </DataTable>
+  <div>
+    <div class="flex gap-2">
+      <IconField class="w-full">
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText type="search" v-model="search" />
+      </IconField>
+      <Button @click="fetchResources()">Buscar</Button>
+    </div>
+
+    <DataTable lazy :value="resources" paginator :rows="meta.perPage" :totalRecords="meta.totalCount" :loading="isLoading" @page="onPageChange($event)">
+      <template #empty>Nenhum registro encontrado</template>
+      <template #loading>Carregando registros. Por favor, espere</template>
+      <slot></slot>
+    </DataTable>
+  </div>
 </template>

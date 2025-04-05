@@ -6,9 +6,11 @@ module Crud
       before_action :set_resource, only: %i[ show update destroy ]
 
       def index
-        @resources = model
+        @q = model
           .not_status_deleted
           .page(params[:page])
+          .ransack(params[:q])
+        @resources = @q.result
         render json: {
           resources: @resources,
           meta: {
