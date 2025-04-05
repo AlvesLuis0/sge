@@ -1,6 +1,7 @@
 <script setup>
 import api from '@/service/api';
 import { onMounted, ref } from 'vue';
+import { inject } from 'vue';
 
 const props = defineProps({
   path: String,
@@ -19,6 +20,7 @@ const page = ref(1);
 const search = ref('');
 const isLoading = ref(false);
 const meta = ref({ totalPages: 0, perPage: 0, totalCount: 0, currentPage: 1 });
+const dialogRef = inject('dialogRef');
 
 const fetchResources = async () => {
   isLoading.value = true;
@@ -40,6 +42,12 @@ const onPageChange = (event) => {
   fetchResources();
 };
 
+const closeDialog = (id) => {
+  dialogRef.value.close({
+    selectedId: id
+  });
+};
+
 onMounted(fetchResources);
 </script>
 
@@ -52,13 +60,18 @@ onMounted(fetchResources);
         </InputIcon>
         <InputText type="search" v-model="search" />
       </IconField>
-      <Button @click="fetchResources()">Buscar</Button>
+      <Button @click="fetchResources()" icon="pi pi-search" severity="secondary" />
     </div>
 
     <DataTable lazy :value="resources" paginator :rows="meta.perPage" :totalRecords="meta.totalCount" :loading="isLoading" @page="onPageChange($event)">
       <template #empty>Nenhum registro encontrado</template>
       <template #loading>Carregando registros. Por favor, espere</template>
       <slot></slot>
+      <Column field="actions">
+        <template #body="slotProps">
+          <Button @click="closeDialog(slotProps.data.id)" severity="info" icon="pi pi-pencil" />
+        </template>
+      </Column>
     </DataTable>
   </div>
 </template>

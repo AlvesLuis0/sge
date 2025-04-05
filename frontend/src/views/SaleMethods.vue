@@ -30,7 +30,10 @@ const searchSaleMethod = async (id) => {
 };
 
 const openSaleMethodDialog = () => {
-  searchDialog(dialog, 'SaleMethods');
+  searchDialog(dialog, 'SaleMethods', (id) => {
+    if (id == null) return;
+    searchSaleMethod(id);
+  });
 };
 </script>
 

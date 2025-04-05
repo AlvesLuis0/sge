@@ -8,7 +8,13 @@ const customDialog = (context, view, options) => {
   context.open(view, options);
 };
 
-export const searchDialog = (context, resource) => {
+export const searchDialog = (
+  context,
+  resource,
+  onSelect = (id) => {
+    console.log(id);
+  }
+) => {
   customDialog(
     context,
     defineAsyncComponent(() => import(`@/components/${resource}/${resource}Dialog.vue`)),
@@ -16,6 +22,9 @@ export const searchDialog = (context, resource) => {
       props: {
         header: 'PESQUISAR',
         modal: true
+      },
+      onClose: (opt = {}) => {
+        onSelect((opt.data || {}).selectedId);
       }
     }
   );
