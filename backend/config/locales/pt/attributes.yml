@@ -4,3 +4,4 @@ pt:
     description: Descrição
     position: Posição
     status: Status
+    payment_type: Tipo de pagamento

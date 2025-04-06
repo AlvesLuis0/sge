@@ -3,7 +3,7 @@ module PaymentType
     extend ActiveSupport::Concern
 
     included do
-      enum :status,
+      enum :payment_type,
         {
           cash: "cash",
           credit_card: "credit_card",
