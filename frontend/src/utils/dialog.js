@@ -38,7 +38,8 @@ export const dialogMessages = (context, messages) => {
     {
       props: {
         header: 'INFORMAÇÃO',
-        modal: true
+        modal: true,
+        contentClass: 'p-confirmdialog'
       },
       data: { items: messages }
     }
