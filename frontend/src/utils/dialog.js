@@ -21,7 +21,8 @@ export const searchDialog = (
     {
       props: {
         header: 'PESQUISAR',
-        modal: true
+        modal: true,
+        contentClass: 'p-search-dialog'
       },
       onClose: (opt = {}) => {
         onSelect((opt.data || {}).selectedId);
