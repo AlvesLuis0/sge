@@ -22,7 +22,8 @@ const isLoading = ref(false);
 const meta = ref({ totalPages: 0, perPage: 0, totalCount: 0, currentPage: 1 });
 const dialogRef = inject('dialogRef');
 
-const fetchResources = async () => {
+const fetchResources = async (event) => {
+  if (event) event.preventDefault();
   isLoading.value = true;
   const params = { ...props.params, page: page.value };
   params[props.searchParam] = search.value;
@@ -53,7 +54,7 @@ onMounted(fetchResources);
 
 <template>
   <div>
-    <div class="flex gap-2">
+    <form class="flex gap-2" @submit="fetchResources($event)">
       <IconField class="w-full">
         <InputIcon>
           <i class="pi pi-search" />
@@ -61,7 +62,7 @@ onMounted(fetchResources);
         <InputText type="search" v-model="search" />
       </IconField>
       <Button @click="fetchResources()" icon="pi pi-search" severity="secondary" />
-    </div>
+    </form>
 
     <DataTable lazy :value="resources" paginator :rows="meta.perPage" :totalRecords="meta.totalCount" :loading="isLoading" @page="onPageChange($event)">
       <template #empty>Nenhum registro encontrado</template>
