@@ -13,11 +13,5 @@ module Status
         validate: true,
         default: :active
     end
-
-    class_methods do
-      def public_statuses
-        statuses.except(:deleted)
-      end
-    end
   end
 end
