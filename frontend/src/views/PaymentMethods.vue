@@ -41,29 +41,31 @@ const openPaymentMethodDialog = () => {
       <ActionsToolbar @reset="reset" :resource="paymentMethod" :isResourceLoaded="isPaymentMethodLoaded" path="/payment_methods" />
     </template>
 
-    <div class="md:col-span-2">
-      <label for="id">Código</label>
-      <InputGroup>
-        <InputNumber id="id" v-model="paymentMethod.id" :disabled="isPaymentMethodLoaded" @blur="searchPaymentMethod(paymentMethod.id)" />
-        <Button severity="secondary" @click="openPaymentMethodDialog">
-          <i class="pi pi-search"></i>
-        </Button>
-      </InputGroup>
-    </div>
+    <div class="card grid md:grid-cols-12 gap-4">
+      <div class="md:col-span-2">
+        <label for="id">Código</label>
+        <InputGroup>
+          <InputNumber id="id" v-model="paymentMethod.id" :disabled="isPaymentMethodLoaded" @blur="searchPaymentMethod(paymentMethod.id)" />
+          <Button severity="secondary" @click="openPaymentMethodDialog">
+            <i class="pi pi-search"></i>
+          </Button>
+        </InputGroup>
+      </div>
 
-    <div class="md:col-span-6">
-      <label for="description" class="required">Descrição</label>
-      <InputText id="description" v-model="paymentMethod.description" maxlength="60" />
-    </div>
+      <div class="md:col-span-6">
+        <label for="description" class="required">Descrição</label>
+        <InputText id="description" v-model="paymentMethod.description" maxlength="60" />
+      </div>
 
-    <div class="md:col-span-2">
-      <label for="payment_type" class="required">Tipo de pagamento</label>
-      <Select id="payment_type" v-model="paymentMethod.payment_type" :options="Object.values(PAYMENT_TYPES)" optionLabel="description" optionValue="value" />
-    </div>
+      <div class="md:col-span-2">
+        <label for="payment_type" class="required">Tipo de pagamento</label>
+        <Select id="payment_type" v-model="paymentMethod.payment_type" :options="Object.values(PAYMENT_TYPES)" optionLabel="description" optionValue="value" />
+      </div>
 
-    <div class="md:col-span-2">
-      <label for="status" class="required">Status</label>
-      <Select id="status" v-model="paymentMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
+      <div class="md:col-span-2">
+        <label for="status" class="required">Status</label>
+        <Select id="status" v-model="paymentMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
+      </div>
     </div>
   </Form>
 </template>

@@ -40,29 +40,31 @@ const openSaleMethodDialog = () => {
       <ActionsToolbar @reset="reset" :resource="saleMethod" :isResourceLoaded="isSaleMethodLoaded" path="/sale_methods" />
     </template>
 
-    <div class="md:col-span-2">
-      <label for="id">Código</label>
-      <InputGroup>
-        <InputNumber id="id" v-model="saleMethod.id" :disabled="isSaleMethodLoaded" @blur="searchSaleMethod(saleMethod.id)" />
-        <Button severity="secondary" @click="openSaleMethodDialog">
-          <i class="pi pi-search"></i>
-        </Button>
-      </InputGroup>
-    </div>
+    <div class="card grid md:grid-cols-12 gap-4">
+      <div class="md:col-span-2">
+        <label for="id">Código</label>
+        <InputGroup>
+          <InputNumber id="id" v-model="saleMethod.id" :disabled="isSaleMethodLoaded" @blur="searchSaleMethod(saleMethod.id)" />
+          <Button severity="secondary" @click="openSaleMethodDialog">
+            <i class="pi pi-search"></i>
+          </Button>
+        </InputGroup>
+      </div>
 
-    <div class="md:col-span-6">
-      <label for="description" class="required">Descrição</label>
-      <InputText id="description" v-model="saleMethod.description" maxlength="60" />
-    </div>
+      <div class="md:col-span-6">
+        <label for="description" class="required">Descrição</label>
+        <InputText id="description" v-model="saleMethod.description" maxlength="60" />
+      </div>
 
-    <div class="md:col-span-2">
-      <label for="position">Posição</label>
-      <InputNumber id="position" v-model="saleMethod.position" />
-    </div>
+      <div class="md:col-span-2">
+        <label for="position">Posição</label>
+        <InputNumber id="position" v-model="saleMethod.position" />
+      </div>
 
-    <div class="md:col-span-2">
-      <label for="status" class="required">Status</label>
-      <Select id="status" v-model="saleMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
+      <div class="md:col-span-2">
+        <label for="status" class="required">Status</label>
+        <Select id="status" v-model="saleMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
+      </div>
     </div>
   </Form>
 </template>
