@@ -1,12 +1,12 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
-import { SALE_METHOD_DEFAULT } from '@/factory/sale-methods';
+import { SALE_METHOD_DEFAULT } from '@/storage/sale-methods';
 import api from '@/service/api';
 import { dialogMessages, searchDialog } from '@/utils/dialog';
 import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
-import { STATUSES } from '@/factory/statuses';
+import { STATUSES } from '@/storage/statuses';
 
 const saleMethod = ref(SALE_METHOD_DEFAULT());
 const isSaleMethodLoaded = ref(false);

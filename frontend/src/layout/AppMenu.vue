@@ -13,6 +13,11 @@ const model = ref([
         label: 'Formas de venda',
         icon: 'pi pi-fw pi-tags',
         to: '/sale_methods'
+      },
+      {
+        label: 'Formas de pagamento',
+        icon: 'pi pi-fw pi-credit-card',
+        to: '/payment_methods'
       }
     ]
   }
