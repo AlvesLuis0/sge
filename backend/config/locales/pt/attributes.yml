@@ -5,3 +5,10 @@ pt:
     position: Posição
     status: Status
     payment_type: Tipo de pagamento
+    operation_type: Tipo de operação
+    entry_exit: Entrada/Saída
+    updates_stock: Atualiza estoque
+    input_quantity_on_inclusion: Digita quantidade - Inclusão
+    input_quantity_on_update: Digita quantidade - Alteração
+    input_price_on_inclusion: Digita preço - Inclusão
+    input_price_on_update: Digita preço - Alteração
