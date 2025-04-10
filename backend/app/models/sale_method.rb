@@ -1,7 +1,7 @@
 class SaleMethod < ApplicationRecord
   include Status::Enum
 
-  default_scope -> { order(:position) }
+  default_scope -> { order(:position, :description) }
 
   validates :description, presence: true, length: { maximum: 60 }
 

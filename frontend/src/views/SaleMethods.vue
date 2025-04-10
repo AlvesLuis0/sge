@@ -40,7 +40,7 @@ const openSaleMethodDialog = () => {
       <ActionsToolbar @reset="reset" :resource="saleMethod" :isResourceLoaded="isSaleMethodLoaded" path="/sale_methods" />
     </template>
 
-    <div class="card grid md:grid-cols-12 gap-4">
+    <div class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label for="id">Código</label>
         <InputGroup>

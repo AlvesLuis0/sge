@@ -18,6 +18,11 @@ const model = ref([
         label: 'Formas de pagamento',
         icon: 'pi pi-fw pi-credit-card',
         to: '/payment_methods'
+      },
+      {
+        label: 'Códigos de operação',
+        icon: 'pi pi-fw pi-box',
+        to: '/operation_codes'
       }
     ]
   }
