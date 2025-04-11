@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_222711) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_10_221229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "entry_exit", ["entry", "exit"]
+  create_enum "marital_statuses", ["single", "married", "divorced", "widowed"]
   create_enum "operation_types", ["sale", "consignment", "return"]
   create_enum "payment_types", ["cash", "credit_card", "debit_card", "installment", "pix"]
+  create_enum "person_types", ["individual", "company"]
   create_enum "statuses", ["active", "inactive", "deleted"]
 
   create_table "operation_codes", force: :cascade do |t|
@@ -42,6 +44,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_222711) do
     t.enum "status", default: "active", null: false, enum_type: "statuses"
     t.index ["payment_type"], name: "index_payment_methods_on_payment_type"
     t.index ["status"], name: "index_payment_methods_on_status"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "name", limit: 100, null: false
+    t.enum "person_type", null: false, enum_type: "person_types"
+    t.string "cpf", limit: 11
+    t.string "rg", limit: 15
+    t.string "issuing_agency", limit: 20
+    t.date "birth_date"
+    t.enum "marital_status", enum_type: "marital_statuses"
+    t.string "cnpj", limit: 14
+    t.string "state_registration", limit: 20
+    t.string "trade_name", limit: 40
+    t.index ["cnpj"], name: "index_people_on_cnpj"
+    t.index ["cpf"], name: "index_people_on_cpf"
+    t.index ["marital_status"], name: "index_people_on_marital_status"
+    t.index ["person_type"], name: "index_people_on_person_type"
   end
 
   create_table "sale_methods", force: :cascade do |t|
