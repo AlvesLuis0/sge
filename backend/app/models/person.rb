@@ -2,10 +2,12 @@ class Person < ApplicationRecord
   include PersonType::Enum
   include MaritalStatus::Enum
 
+  has_one :address
+
   validates :name, presence: true, length: { maximum: 100 }
   with_options if: :person_type_individual? do |individual|
-    individual.validates :cpf, if: cpf?, presence: true, uniqueness: true, length: { is: 11 }
-    individual.validates :rg, if: rg?, presence: true, uniqueness: true, length: { maximum: 15 }
+    individual.validates :cpf, if: :cpf?, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { is: 11 }
+    individual.validates :rg, if: :rg?, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { maximum: 15 }
     individual.validates :issuing_agency, if: :issuing_agency?, presence: true, length: { maximum: 20 }
     individual.validates :birth_date, if: :birth_date?, presence: true, comparison: { less_than_or_equal_to: -> { Date.today } }
   end

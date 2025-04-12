@@ -3,8 +3,6 @@ class OperationCode < ApplicationRecord
   include OperationType::Enum
   include EntryExit::Enum
 
-  default_scope -> { order(:description) }
-
   attribute :updates_stock, :boolean, default: true
   attribute :input_quantity_on_inclusion, :boolean, default: false
   attribute :input_quantity_on_update, :boolean, default: true

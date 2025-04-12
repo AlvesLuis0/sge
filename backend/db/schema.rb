@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_11_233635) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_11_235958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_233635) do
   create_enum "payment_types", ["cash", "credit_card", "debit_card", "installment", "pix"]
   create_enum "person_types", ["individual", "company"]
   create_enum "statuses", ["active", "inactive", "deleted"]
+
+  create_table "addresses", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.string "street", limit: 60
+    t.integer "number"
+    t.string "complement", limit: 60
+    t.string "zip_code", limit: 8
+    t.string "neighborhood", limit: 60
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_addresses_on_city_id"
+    t.index ["person_id"], name: "index_addresses_on_person_id"
+  end
 
   create_table "cities", force: :cascade do |t|
     t.bigint "state_id", null: false
@@ -83,5 +95,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_233635) do
     t.string "uf", limit: 2, null: false
   end
 
+  add_foreign_key "addresses", "cities"
+  add_foreign_key "addresses", "people"
   add_foreign_key "cities", "states"
 end
