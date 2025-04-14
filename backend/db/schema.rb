@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_11_235958) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_12_203643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "contact_types", ["email", "mobile"]
   create_enum "entry_exit", ["entry", "exit"]
   create_enum "marital_statuses", ["single", "married", "divorced", "widowed"]
   create_enum "operation_types", ["sale", "consignment", "return"]
@@ -40,6 +41,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_235958) do
     t.string "name", limit: 60, null: false
     t.integer "ibge", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.enum "contact_type", null: false, enum_type: "contact_types"
+    t.string "email", limit: 100
+    t.string "mobile_number", limit: 13
+    t.index ["contact_type"], name: "index_contacts_on_contact_type"
+    t.index ["person_id"], name: "index_contacts_on_person_id"
   end
 
   create_table "operation_codes", force: :cascade do |t|
@@ -98,4 +108,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_235958) do
   add_foreign_key "addresses", "cities"
   add_foreign_key "addresses", "people"
   add_foreign_key "cities", "states"
+  add_foreign_key "contacts", "people"
 end
