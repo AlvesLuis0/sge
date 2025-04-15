@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_12_203643) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_14_222851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_12_203643) do
     t.string "mobile_number", limit: 13
     t.index ["contact_type"], name: "index_contacts_on_contact_type"
     t.index ["person_id"], name: "index_contacts_on_person_id"
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.datetime "registered_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.text "note"
+    t.enum "status", default: "active", null: false, enum_type: "statuses"
+    t.index ["person_id"], name: "index_customers_on_person_id"
+    t.index ["status"], name: "index_customers_on_status"
   end
 
   create_table "operation_codes", force: :cascade do |t|
@@ -109,4 +118,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_12_203643) do
   add_foreign_key "addresses", "people"
   add_foreign_key "cities", "states"
   add_foreign_key "contacts", "people"
+  add_foreign_key "customers", "people"
 end
