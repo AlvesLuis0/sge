@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class CustomersController < ApplicationController
-  include Crud::Extension
-
+class CustomersController < CrudController
   def initialize
     @model = Customer
     @parameters = { customer: [
