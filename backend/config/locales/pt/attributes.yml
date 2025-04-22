@@ -4,7 +4,9 @@ pt:
     description: Descrição
     position: Posição
     status: Status
+
     payment_type: Tipo de pagamento
+
     operation_type: Tipo de operação
     entry_exit: Entrada/Saída
     updates_stock: Atualiza estoque
@@ -12,3 +14,35 @@ pt:
     input_quantity_on_update: Digita quantidade - Alteração
     input_price_on_inclusion: Digita preço - Inclusão
     input_price_on_update: Digita preço - Alteração
+
+    name: Nome
+    ibge: IBGE
+    uf: UF
+    state: Estado
+
+    person_type: Tipo de pessoa
+    cpf: CPF
+    rg: RG
+    issuing_agency: Órgão emissor
+    birth_date: Data de nascimento
+    marital_status: Estado civil
+    cnpj: CNPJ
+    state_registration: Inscrição estadual
+    trade_name: Nome fantasia
+
+    person: Pessoa
+    contact_type: Tipo de contato
+    email: Email
+    mobile_number: Número de celular
+
+    street: Rua
+    number: Número
+    complement: Complemento
+    zip_code: CEP
+    neighborhood: Bairro
+    city: Cidade
+
+    registered_at: Registrado em
+    note: Observação
+    customer: Cliente
+    address: Endereço
