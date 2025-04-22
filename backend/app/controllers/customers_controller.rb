@@ -6,8 +6,8 @@ class CustomersController < CrudController
     @parameters = { customer: [
       :note, :status,
       person_attributes: [
-        :name, :person_type, :cpf, :rg, :issuing_agency, :birth_date, :marital_status, :cnpj, :state_registration, :trade_name,
-        address_attributes: [:id, :street, :number, :complement, :zipcode, :neighborhood, :city],
+        :id, :name, :person_type, :cpf, :rg, :issuing_agency, :birth_date, :marital_status, :cnpj, :state_registration, :trade_name,
+        address_attributes: [:id, :street, :number, :complement, :zip_code, :neighborhood, :city],
         contacts_attributes: [[:id, :contact_type, :email, :mobile_number]]
       ]
     ] }
