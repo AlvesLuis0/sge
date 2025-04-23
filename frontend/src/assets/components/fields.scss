@@ -3,6 +3,9 @@
   color: red;
 }
 
-.p-inputtext, .p-inputnumber, .p-select {
+.p-inputtext,
+.p-inputnumber,
+.p-select,
+.p-datepicker {
   @apply w-full;
 }

@@ -1,3 +1,5 @@
+import { STATUSES } from './statuses';
+
 export const OPERATION_CODE_DEFAULT = () => ({
   id: null,
   description: null,
@@ -8,5 +10,5 @@ export const OPERATION_CODE_DEFAULT = () => ({
   input_quantity_on_update: true,
   input_price_on_inclusion: false,
   input_price_on_update: true,
-  status: 'active'
+  status: STATUSES.active.value
 });
