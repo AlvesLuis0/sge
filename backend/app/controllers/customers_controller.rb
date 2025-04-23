@@ -3,14 +3,14 @@
 class CustomersController < CrudController
   def initialize
     @model = Customer
-    @parameters = { customer: [
+    @parameters = [
       :note, :status,
-      person_attributes: [
-        :id, :name, :person_type, :cpf, :rg, :issuing_agency, :birth_date, :marital_status, :cnpj, :state_registration, :trade_name,
-        address_attributes: [:id, :street, :number, :complement, :zip_code, :neighborhood, :city],
-        contacts_attributes: [[:id, :contact_type, :email, :mobile_number]]
+      person: [
+        :name, :person_type, :cpf, :rg, :issuing_agency, :birth_date, :marital_status, :cnpj, :state_registration, :trade_name,
+        address: [:street, :number, :complement, :zip_code, :neighborhood, :city_id],
+        contacts: [[:id, :contact_type, :email, :mobile_number]]
       ]
-    ] }
+    ]
   end
 
   def show
@@ -28,5 +28,13 @@ class CustomersController < CrudController
     else
       super
     end
+  end
+
+  def resource_params
+    p = params.permit(@parameters).to_h
+    p[:person_attributes] = p.delete(:person)
+    p[:person_attributes][:address_attributes] = p[:person_attributes].delete(:address)
+    p[:person_attributes][:contacts_attributes] = p[:person_attributes].delete(:contacts)
+    p
   end
 end

@@ -4,7 +4,7 @@ class Person < ApplicationRecord
 
   has_one :address
   has_many :contacts
-  accepts_nested_attributes_for :address, :contacts
+  accepts_nested_attributes_for :address, :contacts, update_only: true
 
   validates :name, presence: true, length: { maximum: 100 }
   with_options if: :person_type_individual? do |individual|

@@ -2,24 +2,11 @@ class Customer < ApplicationRecord
   include Status::Enum
 
   belongs_to :person
-  accepts_nested_attributes_for :person
+  accepts_nested_attributes_for :person, update_only: true
 
   validates :note, if: :note?, presence: true, length: { maximum: 1000 }
   validate :address_must_be_valid
   validate :contacts_must_be_valid
-
-  after_initialize -> {
-    address = Address.new
-    contacts = [
-      Contact.new(contact_type: :email),
-      Contact.new(contact_type: :mobile),
-      Contact.new(contact_type: :mobile),
-      Contact.new(contact_type: :mobile)
-    ]
-    self.person ||= Person.new(address: address, contacts: contacts)
-    self.person.address ||= address
-    self.person.contacts = contacts if self.person.contacts.empty?
-  }
 
   private
 
