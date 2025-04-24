@@ -1,15 +1,15 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
-import { OPERATION_CODE_DEFAULT } from '@/storage/operation-codes';
 import api from '@/service/api';
+import { ENTRY_EXIT } from '@/storage/entry-exit';
+import { OPERATION_CODE_DEFAULT } from '@/storage/operation-codes';
+import { OPERATION_TYPES } from '@/storage/operation-types';
+import { STATUSES } from '@/storage/statuses';
+import { YES_NO } from '@/storage/yes-no';
 import { dialogMessages, searchDialog } from '@/utils/dialog';
 import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
-import { STATUSES } from '@/storage/statuses';
-import { OPERATION_TYPES } from '@/storage/operation-types';
-import { ENTRY_EXIT } from '@/storage/entry-exit';
-import { YES_NO } from '@/storage/yes-no';
 
 const operationCode = ref(OPERATION_CODE_DEFAULT());
 const isOperationCodeLoaded = ref(false);
@@ -28,6 +28,7 @@ const searchOperationCode = async (id) => {
     operationCode.value = response;
     isOperationCodeLoaded.value = true;
   } catch (error) {
+    operationCode.value.id = null;
     dialogMessages(dialog, error.response.data.errors);
   }
 };

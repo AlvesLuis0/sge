@@ -1,13 +1,13 @@
 <script setup>
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
-import { PAYMENT_METHOD_DEFAULT } from '@/storage/payment-methods';
 import api from '@/service/api';
+import { PAYMENT_METHOD_DEFAULT } from '@/storage/payment-methods';
+import { PAYMENT_TYPES } from '@/storage/payment-types';
+import { STATUSES } from '@/storage/statuses';
 import { dialogMessages, searchDialog } from '@/utils/dialog';
 import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
-import { STATUSES } from '@/storage/statuses';
-import { PAYMENT_TYPES } from '@/storage/payment-types';
 
 const paymentMethod = ref(PAYMENT_METHOD_DEFAULT());
 const isPaymentMethodLoaded = ref(false);
@@ -26,6 +26,7 @@ const searchPaymentMethod = async (id) => {
     paymentMethod.value = response;
     isPaymentMethodLoaded.value = true;
   } catch (error) {
+    paymentMethod.value.id = null;
     dialogMessages(dialog, error.response.data.errors);
   }
 };
