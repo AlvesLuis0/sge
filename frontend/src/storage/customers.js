@@ -1,5 +1,4 @@
 import { CONTACT_TYPES } from './contact-types';
-import { MARITAL_STATUSES } from './marital-statuses';
 import { PERSON_TYPES } from './person-types';
 import { STATUSES } from './statuses';
 
@@ -15,12 +14,11 @@ export const CUSTOMER_DEFAULT = () => ({
     rg: null,
     issuing_agency: null,
     birth_date: null,
-    marital_status: MARITAL_STATUSES.single.value,
+    marital_status: null,
     cnpj: null,
     state_registration: null,
     trade_name: null,
     address: {
-      id: null,
       street: null,
       number: null,
       complement: null,
