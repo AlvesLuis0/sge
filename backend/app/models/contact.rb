@@ -9,9 +9,9 @@ class Contact < ApplicationRecord
   protected
 
   def clear_attributes
-    attributes_to_clear = if contact_type_email_individual?
+    attributes_to_clear = if contact_type_email?
                             [ :mobile_number ]
-                          elsif contac_type_mobile?
+                          elsif contact_type_mobile?
                             [ :email ]
                           end
     super(attributes_to_clear)

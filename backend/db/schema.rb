@@ -90,7 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_222851) do
     t.string "cpf", limit: 11
     t.string "rg", limit: 15
     t.string "issuing_agency", limit: 20
-    t.datetime "birth_date"
+    t.date "birth_date"
     t.enum "marital_status", enum_type: "marital_statuses"
     t.string "cnpj", limit: 14
     t.string "state_registration", limit: 20

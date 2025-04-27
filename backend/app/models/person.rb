@@ -10,7 +10,7 @@ class Person < ApplicationRecord
   validates :cpf, if: -> { person_type_individual? && cpf? }, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { is: 11 }
   validates :rg, if: -> { person_type_individual? && rg? }, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { maximum: 15 }
   validates :issuing_agency, if: -> { person_type_individual? && issuing_agency? }, presence: true, length: { maximum: 20 }
-  validates :birth_date, if: -> { person_type_individual? && birth_date? }, presence: true, comparison: { less_than_or_equal_to: -> { DateTime.now } }
+  validates :birth_date, if: -> { person_type_individual? && birth_date? }, presence: true, comparison: { less_than_or_equal_to: -> { Date.today } }
 
   validates :cnpj, if: -> { person_type_company? && cnpj? }, presence: true, numericality: { only_integer: true }, length: { is: 14 }, uniqueness: true
   validates :state_registration, if: -> { person_type_company? && state_registration? }, presence: true, length: { maximum: 20 }
