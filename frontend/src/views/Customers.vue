@@ -6,7 +6,7 @@ import { CUSTOMER_DEFAULT } from '@/storage/customers';
 import { MARITAL_STATUSES } from '@/storage/marital-statuses';
 import { PERSON_TYPES } from '@/storage/person-types';
 import { STATUSES } from '@/storage/statuses';
-import { stringToDate } from '@/utils/date';
+import { stringToDate, stringToDatetime } from '@/utils/date';
 import { dialogMessages, searchDialog } from '@/utils/dialog';
 import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
@@ -26,7 +26,7 @@ const searchCustomer = async (id) => {
     if (id == null) return;
     const response = await api.get('/customers', id);
     customer.value = response;
-    customer.value.registered_at = stringToDate(customer.value.registered_at);
+    customer.value.registered_at = stringToDatetime(customer.value.registered_at);
     customer.value.person.birth_date = stringToDate(customer.value.person.birth_date);
     isCustomerLoaded.value = true;
   } catch (error) {
