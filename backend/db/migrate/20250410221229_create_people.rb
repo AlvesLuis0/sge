@@ -7,7 +7,7 @@ class CreatePeople < ActiveRecord::Migration[8.0]
       t.string :cpf, limit: 11, index: true
       t.string :rg, limit: 15
       t.string :issuing_agency, limit: 20
-      t.date :birth_date
+      t.datetime :birth_date
       t.enum :marital_status, enum_type: :marital_statuses, index: true
 
       t.string :cnpj, limit: 14, index: true

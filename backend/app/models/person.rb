@@ -11,7 +11,7 @@ class Person < ApplicationRecord
     individual.validates :cpf, if: :cpf?, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { is: 11 }
     individual.validates :rg, if: :rg?, presence: true, numericality: { only_integer: true }, uniqueness: true, length: { maximum: 15 }
     individual.validates :issuing_agency, if: :issuing_agency?, presence: true, length: { maximum: 20 }
-    individual.validates :birth_date, if: :birth_date?, presence: true, comparison: { less_than_or_equal_to: -> { Date.today } }
+    individual.validates :birth_date, if: :birth_date?, presence: true, comparison: { less_than_or_equal_to: -> { DateTime.now } }
   end
   with_options if: :person_type_company? do |company|
     company.validates :cnpj, if: :cnpj?, presence: true, numericality: { only_integer: true }, length: { is: 14 }, uniqueness: true
