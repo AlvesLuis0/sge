@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :cities, only: [:index, :show]
+
   resources :sale_methods
   resources :payment_methods
   resources :operation_codes
