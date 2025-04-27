@@ -2,6 +2,7 @@
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
 import api from '@/service/api';
+import { CITY_DEFAULT } from '@/storage/cities';
 import { CUSTOMER_DEFAULT } from '@/storage/customers';
 import { MARITAL_STATUSES } from '@/storage/marital-statuses';
 import { PERSON_TYPES } from '@/storage/person-types';
@@ -12,10 +13,12 @@ import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
 
 const customer = ref(CUSTOMER_DEFAULT());
+const city = ref(CITY_DEFAULT());
 const isCustomerLoaded = ref(false);
 
 const reset = () => {
   customer.value = CUSTOMER_DEFAULT();
+  city.value = CITY_DEFAULT();
   isCustomerLoaded.value = false;
 };
 
@@ -28,11 +31,30 @@ const searchCustomer = async (id) => {
     customer.value = response;
     customer.value.registered_at = stringToDatetime(customer.value.registered_at);
     customer.value.person.birth_date = stringToDate(customer.value.person.birth_date);
+    searchCity(customer.value.person.address.city_id);
     isCustomerLoaded.value = true;
   } catch (error) {
     customer.value.id = null;
     dialogMessages(dialog, error.response.data.errors);
   }
+};
+
+const searchCity = async (id) => {
+  try {
+    if (id == null) return;
+    const response = await api.get('/cities', id);
+    city.value = response;
+    customer.value.person.address.city_id = response.id;
+    isCustomerLoaded.value = true;
+  } catch (error) {
+    city.value = CITY_DEFAULT();
+    customer.value.person.address.city_id = null;
+    dialogMessages(dialog, error.response.data.errors);
+  }
+};
+
+const openCityDialog = () => {
+  searchDialog(dialog, 'Cities', searchCity);
 };
 
 const openCustomerDialog = () => {
@@ -121,6 +143,45 @@ const openCustomerDialog = () => {
       <div class="md:col-span-4">
         <label>Nome fantasia</label>
         <InputText v-model="customer.person.trade_name" maxlength="40" />
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-4">
+      <div class="md:col-span-6">
+        <label>Rua</label>
+        <InputText v-model="customer.person.address.street" maxlength="60" />
+      </div>
+
+      <div class="md:col-span-1">
+        <label>Número</label>
+        <InputNumber v-model="customer.person.address.number" />
+      </div>
+
+      <div class="md:col-span-5">
+        <label>Complemento</label>
+        <InputText v-model="customer.person.address.complement" maxlength="60" />
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-4">
+      <div class="md:col-span-2">
+        <label>CEP</label>
+        <InputText v-model="customer.person.address.zip_code" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="8" />
+      </div>
+
+      <div class="md:col-span-6">
+        <label>Bairro</label>
+        <InputText v-model="customer.person.address.neighborhood" maxlength="60" />
+      </div>
+
+      <div class="md:col-span-3">
+        <label>Cidade</label>
+        <InputGroup>
+          <InputText v-model="city.name" readonly />
+          <Button severity="secondary" @click="openCityDialog()">
+            <i class="pi pi-search"></i>
+          </Button>
+        </InputGroup>
       </div>
     </div>
   </Form>
