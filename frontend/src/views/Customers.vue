@@ -3,6 +3,7 @@ import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
 import api from '@/service/api';
 import { CITY_DEFAULT } from '@/storage/cities';
+import { CONTACT_TYPES } from '@/storage/contact-types';
 import { CUSTOMER_DEFAULT } from '@/storage/customers';
 import { MARITAL_STATUSES } from '@/storage/marital-statuses';
 import { PERSON_TYPES } from '@/storage/person-types';
@@ -60,6 +61,9 @@ const openCityDialog = () => {
 const openCustomerDialog = () => {
   searchDialog(dialog, 'Customers', searchCustomer);
 };
+
+const isEmail = ({ contact_type }) => contact_type == CONTACT_TYPES.email.value;
+const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.value;
 </script>
 
 <template>
@@ -101,7 +105,7 @@ const openCustomerDialog = () => {
     </div>
 
     <!-- individual -->
-    <div class="grid md:grid-cols-12 gap-4">
+    <div v-show="customer.person.person_type == PERSON_TYPES.individual.value" class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label>CPF</label>
         <InputText v-model="customer.person.cpf" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" />
@@ -129,7 +133,7 @@ const openCustomerDialog = () => {
     </div>
 
     <!-- company -->
-    <div class="grid md:grid-cols-12 gap-4">
+    <div v-show="customer.person.person_type == PERSON_TYPES.company.value" class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label>CNPJ</label>
         <InputText v-model="customer.person.cnpj" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="14" />
@@ -182,6 +186,27 @@ const openCustomerDialog = () => {
             <i class="pi pi-search"></i>
           </Button>
         </InputGroup>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-4">
+      <div v-for="(contact, index) of customer.person.contacts" :key="contact.id || index" :class="`md:col-span-${isEmail(contact) ? '4' : '2'}`">
+        <div v-if="isEmail(contact)">
+          <label>Email</label>
+          <InputText v-model="contact.email" maxlength="100" />
+        </div>
+
+        <div v-if="isMobile(contact)">
+          <label>Celular {{ index }}</label>
+          <InputText v-model="contact.mobile_number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="13" />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-4">
+      <div class="md:col-span-12">
+        <label>Observação</label>
+        <Textarea v-model="customer.note" maxlength="1000" />
       </div>
     </div>
   </Form>
