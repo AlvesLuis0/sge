@@ -6,6 +6,6 @@ import SearchDataTable from '../SearchDataTable.vue';
   <SearchDataTable lazy path="/cities" search-param="q[name_cont]">
     <Column field="id" header="Código"></Column>
     <Column field="name" header="Nome"></Column>
-    <Column field="ibge" header="IBGE"></Column>
+    <Column field="state.name" header="Estado"></Column>
   </SearchDataTable>
 </template>

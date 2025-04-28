@@ -3,6 +3,7 @@ class CitiesController < ApplicationController
 
   def index
     @q = City
+      .includes(:state)
            .page(params[:page])
            .ransack(params[:q])
     @resources = @q.result
@@ -14,7 +15,7 @@ class CitiesController < ApplicationController
         total_count: @resources.total_count,
         current_page: @resources.current_page
       }
-    }
+    }, include: :state
   end
 
   def show
