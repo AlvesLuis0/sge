@@ -5,7 +5,7 @@ import { PAYMENT_TYPES } from '@/storage/payment-types';
 </script>
 
 <template>
-  <SearchDataTable lazy path="/payment_methods">
+  <SearchDataTable path="/payment_methods">
     <Column field="id" header="Código"></Column>
     <Column field="description" header="Descrição"></Column>
     <Column field="payment_type" header="Tipo de pagamento">

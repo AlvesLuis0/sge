@@ -4,7 +4,7 @@ import SearchDataTable from '../SearchDataTable.vue';
 </script>
 
 <template>
-  <SearchDataTable lazy path="/sale_methods">
+  <SearchDataTable path="/sale_methods">
     <Column field="id" header="Código"></Column>
     <Column field="description" header="Descrição"></Column>
     <Column field="position" header="Posição"></Column>
