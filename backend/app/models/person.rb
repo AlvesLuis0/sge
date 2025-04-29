@@ -16,6 +16,10 @@ class Person < ApplicationRecord
   validates :state_registration, if: -> { person_type_company? && state_registration? }, presence: true, length: { maximum: 20 }
   validates :trade_name, if: -> { person_type_company? && trade_name? }, presence: true, length: { maximum: 40 }
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["name"]
+  end
+
   protected
 
   def clear_attributes

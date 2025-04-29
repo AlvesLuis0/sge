@@ -13,6 +13,16 @@ class CustomersController < CrudController
     ]
   end
 
+  def index
+    @q = Customer
+      .includes(:person)
+      .not_status_deleted
+      .page(params[:page])
+      .ransack(params[:q])
+    @resources = @q.result
+    render json: prepare_index_response(@resources), include: :person
+  end
+
   def show
     render json: @resource, include: { person: { include: [:address, :contacts] } }
   end

@@ -8,6 +8,14 @@ class Customer < ApplicationRecord
   validate :address_must_be_valid
   validate :contacts_must_be_valid
 
+  def self.ransackable_attributes(auth_object = nil)
+    []
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["person"]
+  end
+
   private
 
   NUMBER_OF_EMAILS = 1

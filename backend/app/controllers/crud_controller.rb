@@ -13,15 +13,7 @@ class CrudController < ApplicationController
       .page(params[:page])
       .ransack(params[:q])
     @resources = @q.result
-    render json: {
-      resources: @resources,
-      meta: {
-        total_pages: @resources.total_pages,
-        per_page: @resources.default_per_page,
-        total_count: @resources.total_count,
-        current_page: @resources.current_page
-      }
-    }
+    render json: prepare_index_response(@resources)
   end
 
   def show
@@ -44,6 +36,18 @@ class CrudController < ApplicationController
   end
 
   protected
+
+  def prepare_index_response(resources)
+    {
+      resources: resources,
+      meta: {
+        total_pages: resources.total_pages,
+        per_page: resources.default_per_page,
+        total_count: resources.total_count,
+        current_page: resources.current_page
+      }
+    }
+  end
 
   def set_resource
     @resource = @model.not_status_deleted.find(params.expect(:id))
