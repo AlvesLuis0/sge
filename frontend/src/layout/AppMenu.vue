@@ -30,7 +30,12 @@ const model = ref([
         icon: 'pi pi-fw pi-user',
         to: '/customers'
       },
-      { separator: true }
+      { separator: true },
+      {
+        label: 'Categorias',
+        icon: 'pi pi-fw pi-user',
+        to: '/categories'
+      }
     ]
   }
 ]);

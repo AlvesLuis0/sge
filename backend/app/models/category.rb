@@ -1,4 +1,4 @@
-class SaleMethod < ApplicationRecord
+class Category < ApplicationRecord
   include Status::Enum
 
   validates :description, presence: true, length: { maximum: 60 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_14_222851) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_110940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,6 +34,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_222851) do
     t.bigint "city_id"
     t.index ["city_id"], name: "index_addresses_on_city_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "description", limit: 60, null: false
+    t.enum "status", default: "active", null: false, enum_type: "statuses"
+    t.index ["status"], name: "index_categories_on_status"
   end
 
   create_table "cities", force: :cascade do |t|
