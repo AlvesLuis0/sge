@@ -24,11 +24,13 @@ const model = ref([
         icon: 'pi pi-fw pi-box',
         to: '/operation_codes'
       },
+      { separator: true },
       {
         label: 'Clientes',
         icon: 'pi pi-fw pi-user',
         to: '/customers'
-      }
+      },
+      { separator: true }
     ]
   }
 ]);
