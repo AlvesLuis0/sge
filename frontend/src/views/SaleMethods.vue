@@ -43,9 +43,9 @@ const openSaleMethodDialog = () => {
 
     <div class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
-        <label for="id">Código</label>
+        <label>Código</label>
         <InputGroup>
-          <InputNumber id="id" v-model="saleMethod.id" :disabled="isSaleMethodLoaded" @blur="searchSaleMethod(saleMethod.id)" />
+          <InputNumber v-model="saleMethod.id" :disabled="isSaleMethodLoaded" @blur="searchSaleMethod(saleMethod.id)" />
           <Button severity="secondary" @click="openSaleMethodDialog">
             <i class="pi pi-search"></i>
           </Button>
@@ -53,18 +53,18 @@ const openSaleMethodDialog = () => {
       </div>
 
       <div class="md:col-span-6">
-        <label for="description" class="required">Descrição</label>
-        <InputText id="description" v-model="saleMethod.description" maxlength="60" />
+        <label class="required">Descrição</label>
+        <InputText v-model="saleMethod.description" maxlength="60" />
       </div>
 
       <div class="md:col-span-2">
-        <label for="position">Posição</label>
-        <InputNumber id="position" v-model="saleMethod.position" />
+        <label>Posição</label>
+        <InputNumber v-model="saleMethod.position" />
       </div>
 
       <div class="md:col-span-2">
-        <label for="status" class="required">Status</label>
-        <Select id="status" v-model="saleMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
+        <label class="required">Status</label>
+        <Select v-model="saleMethod.status" :options="Object.values(STATUSES)" optionLabel="description" optionValue="value" />
       </div>
     </div>
   </Form>

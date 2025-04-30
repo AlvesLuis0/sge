@@ -33,7 +33,7 @@ const model = ref([
       { separator: true },
       {
         label: 'Categorias',
-        icon: 'pi pi-fw pi-user',
+        icon: 'pi pi-fw pi-bookmark',
         to: '/categories'
       }
     ]
