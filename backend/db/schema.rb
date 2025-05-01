@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_110940) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_204604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,6 +23,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_110940) do
   create_enum "payment_types", ["cash", "credit_card", "debit_card", "installment", "pix"]
   create_enum "person_types", ["individual", "company"]
   create_enum "statuses", ["active", "inactive", "deleted"]
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "addresses", force: :cascade do |t|
     t.bigint "person_id", null: false
@@ -47,6 +75,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_110940) do
     t.string "name", limit: 60, null: false
     t.integer "ibge", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
+  create_table "colors", force: :cascade do |t|
+    t.string "description", limit: 60, null: false
+    t.enum "status", default: "active", null: false, enum_type: "statuses"
+    t.index ["status"], name: "index_colors_on_status"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -120,6 +154,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_110940) do
     t.string "uf", limit: 2, null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "cities"
   add_foreign_key "addresses", "people"
   add_foreign_key "cities", "states"

@@ -4,13 +4,21 @@ import { dialogConfirmation, dialogMessages } from '@/utils/dialog';
 import { useConfirm, useDialog } from 'primevue';
 
 const emit = defineEmits(['reset']);
-const { path, resource, isResourceLoaded } = defineProps(['path', 'resource', 'isResourceLoaded']);
+const { path, resource, isResourceLoaded, asFormData } = defineProps({
+  path: String,
+  resource: Object,
+  isResourceLoaded: Boolean,
+  asFormData: {
+    type: Boolean,
+    default: () => false
+  }
+});
 const confirm = useConfirm();
 const dialog = useDialog();
 
 const save = async () => {
   try {
-    const data = await api.save(path, resource);
+    const data = await api.save(path, resource, asFormData);
     dialogMessages(dialog, data.messages);
     emit('reset');
   } catch (error) {

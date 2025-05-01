@@ -1,8 +1,13 @@
+import { objectToFormData } from '@/utils/form';
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://localhost:3000'
-});
+const API_URL = 'http://localhost:3000';
+const api = axios.create({ baseURL: API_URL });
+
+export function getImageUrl(path) {
+  if (path == null) return null;
+  return API_URL + path;
+}
 
 export default {
   async get(path, id, params = {}) {
@@ -12,9 +17,16 @@ export default {
     return data;
   },
 
-  async save(path, resource) {
-    const method = resource.id == null ? api.post : api.put;
-    path += resource.id == null ? '' : `/${resource.id}`;
+  async save(path, resource, asFormData = false) {
+    const id = resource.id;
+    let method;
+    if (asFormData) resource = objectToFormData(resource);
+    if (id != null) {
+      method = api.put;
+      path += `/${id}`;
+    } else {
+      method = api.post;
+    }
     const { data } = await method(path, resource);
     return data;
   },

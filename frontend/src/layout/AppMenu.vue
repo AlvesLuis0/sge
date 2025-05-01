@@ -35,6 +35,11 @@ const model = ref([
         label: 'Categorias',
         icon: 'pi pi-fw pi-bookmark',
         to: '/categories'
+      },
+      {
+        label: 'Cores',
+        icon: 'pi pi-fw pi-palette',
+        to: '/colors'
       }
     ]
   }
