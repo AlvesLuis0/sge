@@ -67,7 +67,7 @@ const openColorDialog = () => {
 
     <div class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
-        <ImageUpload v-model="color.image" :initial-preview="color.image_path" />
+        <ImageUpload v-model="color.image" :initial-preview="color.image_path" v-model:_removeImage="color._remove_image" />
       </div>
     </div>
   </Form>

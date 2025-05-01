@@ -1,7 +1,7 @@
 class ColorsController < CrudController
   def initialize
     @model = Color
-    @parameters = [ :description, :status, :image ]
+    @parameters = [ :description, :status, :image, :_remove_image ]
   end
 
   def show
