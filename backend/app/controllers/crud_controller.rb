@@ -9,7 +9,6 @@ class CrudController < ApplicationController
 
   def index
     @q = @model
-      .not_status_deleted
       .page(params[:page])
       .ransack(params[:q])
     @resources = @q.result
@@ -31,7 +30,7 @@ class CrudController < ApplicationController
   end
 
   def destroy
-    @resource.status_deleted!
+    @resource.destroy!
     render json: { messages: [ "Registro excluído" ] }
   end
 
@@ -50,10 +49,10 @@ class CrudController < ApplicationController
   end
 
   def set_resource
-    @resource = @model.not_status_deleted.find(params.expect(:id))
+    @resource = @model.find(params.expect(:id))
   end
 
   def resource_params
-    params.expect(@parameters)
+    params.permit(@parameters)
   end
 end

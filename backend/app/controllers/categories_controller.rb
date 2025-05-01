@@ -1,6 +1,6 @@
 class CategoriesController < CrudController
   def initialize
     @model = Category
-    @parameters = { category: [ :description, :status ] }
+    @parameters = [ :description, :status ]
   end
 end

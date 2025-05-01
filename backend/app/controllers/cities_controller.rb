@@ -11,10 +11,4 @@ class CitiesController < CrudController
     @resources = @q.result
     render json: prepare_index_response(@resources), include: :state
   end
-
-  protected
-
-  def set_resource
-    @resource = @model.find(params.expect(:id))
-  end
 end

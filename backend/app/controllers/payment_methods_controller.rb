@@ -1,6 +1,6 @@
 class PaymentMethodsController < CrudController
   def initialize
     @model = PaymentMethod
-    @parameters = { payment_method: [ :description, :payment_type, :status ] }
+    @parameters = [ :description, :payment_type, :status ]
   end
 end

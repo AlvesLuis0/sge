@@ -7,10 +7,4 @@ class ColorsController < CrudController
   def show
     render json: @resource, methods: :image_path
   end
-
-  private
-
-  def resource_params
-    params.permit(@parameters)
-  end
 end
