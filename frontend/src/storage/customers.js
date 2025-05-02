@@ -24,7 +24,8 @@ export const CUSTOMER_DEFAULT = () => ({
       complement: null,
       zip_code: null,
       neighborhood: null,
-      city_id: null
+      city_id: null,
+      city_name: null
     },
     contacts: [
       { id: null, contact_type: CONTACT_TYPES.email.value, email: null, mobile_number: null },

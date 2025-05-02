@@ -2,7 +2,6 @@
 import ActionsToolbar from '@/components/ActionsToolbar.vue';
 import Form from '@/layout/Form.vue';
 import api from '@/service/api';
-import { CITY_DEFAULT } from '@/storage/cities';
 import { CONTACT_TYPES } from '@/storage/contact-types';
 import { CUSTOMER_DEFAULT } from '@/storage/customers';
 import { MARITAL_STATUSES } from '@/storage/marital-statuses';
@@ -14,12 +13,10 @@ import { useDialog } from 'primevue/usedialog';
 import { ref } from 'vue';
 
 const customer = ref(CUSTOMER_DEFAULT());
-const city = ref(CITY_DEFAULT());
 const isCustomerLoaded = ref(false);
 
 const reset = () => {
   customer.value = CUSTOMER_DEFAULT();
-  city.value = CITY_DEFAULT();
   isCustomerLoaded.value = false;
 };
 
@@ -42,13 +39,15 @@ const searchCustomer = async (id) => {
 
 const searchCity = async (id) => {
   try {
-    if (id == null) return;
+    if (id == null) {
+      customer.value.person.address.city_id = null;
+      customer.value.person.address.city_name = null;
+      return;
+    }
     const response = await api.get('/cities', id);
-    city.value = response;
     customer.value.person.address.city_id = response.id;
-    isCustomerLoaded.value = true;
+    customer.value.person.address.city_name = response.name;
   } catch (error) {
-    city.value = CITY_DEFAULT();
     customer.value.person.address.city_id = null;
     dialogMessages(dialog, error.response.data.errors);
   }
@@ -108,12 +107,12 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
     <div v-show="customer.person.person_type == PERSON_TYPES.individual.value" class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label>CPF</label>
-        <InputText v-model="customer.person.cpf" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" />
+        <InputText v-model="customer.person.cpf" v-keyfilter.pint maxlength="11" />
       </div>
 
       <div class="md:col-span-2">
         <label>RG</label>
-        <InputText v-model="customer.person.rg" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="15" />
+        <InputText v-model="customer.person.rg" v-keyfilter.pint maxlength="15" />
       </div>
 
       <div class="md:col-span-2">
@@ -136,7 +135,7 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
     <div v-show="customer.person.person_type == PERSON_TYPES.company.value" class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label>CNPJ</label>
-        <InputText v-model="customer.person.cnpj" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="14" />
+        <InputText v-model="customer.person.cnpj" v-keyfilter.pint maxlength="14" />
       </div>
 
       <div class="md:col-span-2">
@@ -158,7 +157,7 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
 
       <div class="md:col-span-1">
         <label>Número</label>
-        <InputNumber v-model="customer.person.address.number" />
+        <InputText v-model="customer.person.address.number" v-keyfilter.pint maxlength="5" />
       </div>
 
       <div class="md:col-span-5">
@@ -170,7 +169,7 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
     <div class="grid md:grid-cols-12 gap-4">
       <div class="md:col-span-2">
         <label>CEP</label>
-        <InputText v-model="customer.person.address.zip_code" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="8" />
+        <InputText v-model="customer.person.address.zip_code" v-keyfilter.pint maxlength="8" />
       </div>
 
       <div class="md:col-span-6">
@@ -178,14 +177,19 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
         <InputText v-model="customer.person.address.neighborhood" maxlength="60" />
       </div>
 
-      <div class="md:col-span-3">
+      <div class="md:col-span-1">
         <label>Cidade</label>
         <InputGroup>
-          <InputText v-model="city.name" readonly />
+          <InputNumber v-model="customer.person.address.city_id" @blur="searchCity(customer.person.address.city_id)" />
           <Button severity="secondary" @click="openCityDialog()">
             <i class="pi pi-search"></i>
           </Button>
         </InputGroup>
+      </div>
+
+      <div class="md:col-span-3">
+        <label>&nbsp;</label>
+        <InputText v-model="customer.person.address.city_name" disabled />
       </div>
     </div>
 
@@ -193,12 +197,12 @@ const isMobile = ({ contact_type }) => contact_type == CONTACT_TYPES.mobile.valu
       <div v-for="(contact, index) of customer.person.contacts" :key="contact.id || index" :class="`md:col-span-${isEmail(contact) ? '4' : '2'}`">
         <div v-if="isEmail(contact)">
           <label>Email</label>
-          <InputText v-model="contact.email" maxlength="100" />
+          <InputText v-model="contact.email" v-keyfilter.email maxlength="100" />
         </div>
 
         <div v-if="isMobile(contact)">
           <label>Celular {{ index }}</label>
-          <InputText v-model="contact.mobile_number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="13" />
+          <InputText v-model="contact.mobile_number" v-keyfilter.pint maxlength="13" />
         </div>
       </div>
     </div>
