@@ -46,3 +46,6 @@ pt:
     note: Observação
     customer: Cliente
     address: Endereço
+
+    sizes:
+      description: Tamanho
