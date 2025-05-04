@@ -40,9 +40,9 @@ class CustomersController < CrudController
 
   def resource_params
     p = params.permit(@parameters).to_h
-    p[:person_attributes] = p.delete(:person)
-    p[:person_attributes][:address_attributes] = p[:person_attributes].delete(:address)
-    p[:person_attributes][:contacts_attributes] = p[:person_attributes].delete(:contacts)
+    p[:person_attributes] = p.delete(:person) || {}
+    p[:person_attributes][:address_attributes] = p[:person_attributes].delete(:address) || {}
+    p[:person_attributes][:contacts_attributes] = p[:person_attributes].delete(:contacts) || []
     p
   end
 end

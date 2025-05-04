@@ -156,7 +156,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_175842) do
 
   create_table "sizes", force: :cascade do |t|
     t.bigint "size_chart_id", null: false
-    t.string "description", limit: 60, null: false
+    t.string "description", limit: 4, null: false
     t.integer "position"
     t.index ["size_chart_id"], name: "index_sizes_on_size_chart_id"
   end

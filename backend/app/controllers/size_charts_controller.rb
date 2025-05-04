@@ -7,12 +7,16 @@ class SizeChartsController < CrudController
     ]
   end
 
+  def show
+    render json: @resource, include: :sizes
+  end
+
   protected
 
   def set_resource
     if action_name == "show"
       @resource = SizeChart
-                    .includes(:sizes)
+                    .joins(:sizes)
                     .find(params.expect(:id))
     else
       super
@@ -21,7 +25,7 @@ class SizeChartsController < CrudController
 
   def resource_params
     p = params.permit(@parameters).to_h
-    p[:sizes_attributes] = p.delete(:sizes)
+    p[:sizes_attributes] = p.delete(:sizes) || []
     p
   end
 end
