@@ -16,6 +16,8 @@ class OperationCode < ApplicationRecord
   validates :input_price_on_inclusion, inclusion: [ true, false ]
   validates :input_price_on_update, inclusion: [ true, false ]
 
+  default_scope -> { order(:description) }
+
   def self.ransackable_attributes(auth_object = nil)
     [ "description" ]
   end

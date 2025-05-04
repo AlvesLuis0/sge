@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_204604) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_04_175842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -148,6 +148,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_204604) do
     t.index ["status"], name: "index_sale_methods_on_status"
   end
 
+  create_table "size_charts", force: :cascade do |t|
+    t.string "description", limit: 60, null: false
+    t.enum "status", default: "active", null: false, enum_type: "statuses"
+    t.index ["status"], name: "index_size_charts_on_status"
+  end
+
+  create_table "sizes", force: :cascade do |t|
+    t.bigint "size_chart_id", null: false
+    t.string "description", limit: 60, null: false
+    t.integer "position"
+    t.index ["size_chart_id"], name: "index_sizes_on_size_chart_id"
+  end
+
   create_table "states", force: :cascade do |t|
     t.string "name", limit: 60, null: false
     t.integer "ibge", null: false
@@ -161,4 +174,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_204604) do
   add_foreign_key "cities", "states"
   add_foreign_key "contacts", "people"
   add_foreign_key "customers", "people"
+  add_foreign_key "sizes", "size_charts"
 end

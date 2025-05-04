@@ -8,6 +8,8 @@ class Color < ApplicationRecord
   validates :description, presence: true, length: { maximum: 60 }
   after_save :remove_image_if_necessary
 
+  default_scope -> { order(:description) }
+
   def self.ransackable_attributes(auth_object = nil)
     [ "description" ]
   end

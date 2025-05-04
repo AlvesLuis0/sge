@@ -15,7 +15,7 @@ class CustomersController < CrudController
 
   def index
     @q = Customer
-      .includes(:person)
+      .joins(:person)
       .page(params[:page])
       .ransack(params[:q])
     @resources = @q.result
@@ -31,7 +31,7 @@ class CustomersController < CrudController
   def set_resource
     if action_name == "show"
       @resource = Customer
-                    .includes(person: [:address, :contacts])
+                    .joins(person: [:address, :contacts])
                     .find(params.expect(:id))
     else
       super

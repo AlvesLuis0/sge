@@ -8,6 +8,8 @@ class Customer < ApplicationRecord
   validate :address_must_be_valid
   validate :contacts_must_be_valid
 
+  default_scope -> { ransack(s: 'person_name asc').result }
+
   def self.ransackable_attributes(auth_object = nil)
     []
   end
