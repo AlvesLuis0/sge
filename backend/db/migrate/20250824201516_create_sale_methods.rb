@@ -5,5 +5,7 @@ class CreateSaleMethods < ActiveRecord::Migration[8.0]
       t.integer :position, null: false
       t.integer :status, null: false
     end
+
+    add_index :sale_methods, :status
   end
 end

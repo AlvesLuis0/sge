@@ -3,4 +3,6 @@ class SaleMethod < CrudRecord
     validates :name, length: { maximum: 60 }
     validates :position, numericality: { only_integer: true }
   end
+
+  default_scope { order(:position, :name) }
 end

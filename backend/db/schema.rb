@@ -18,5 +18,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_24_201516) do
     t.string "name", limit: 60, null: false
     t.integer "position", null: false
     t.integer "status", null: false
+    t.index ["status"], name: "index_sale_methods_on_status"
   end
 end
