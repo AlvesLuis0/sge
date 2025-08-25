@@ -9,8 +9,19 @@ class CrudController < ApplicationController
   end
 
   def index
-    @resources = @model.all
-    render json: @resources
+    @resources = @model.all.page(pagination_params[:page]).per(pagination_params[:per])
+    render json: {
+      meta: {
+        limit_value: @resources.limit_value,
+        total_pages: @resources.total_pages,
+        current_page: @resources.current_page,
+        next_page: @resources.next_page,
+        prev_page: @resources.prev_page,
+        is_first_page: @resources.first_page?,
+        is_last_page: @resources.last_page?
+      },
+      resources: @resources
+    }
   end
 
   def show
@@ -46,5 +57,9 @@ class CrudController < ApplicationController
 
   def resource_params
     params.expect(resource: [ :status ])
+  end
+
+  def pagination_params
+    params.permit(:page, :per)
   end
 end
