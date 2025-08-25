@@ -9,7 +9,7 @@ class CrudController < ApplicationController
   end
 
   def index
-    @resources = @model.all.page(pagination_params[:page]).per(pagination_params[:per])
+    @resources = @model.all.page(pagination_params[:page]).per(pagination_params[:limit])
     render json: {
       meta: {
         limit_value: @resources.limit_value,
@@ -60,6 +60,6 @@ class CrudController < ApplicationController
   end
 
   def pagination_params
-    params.permit(:page, :per)
+    params.permit(:page, :limit)
   end
 end
