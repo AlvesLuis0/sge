@@ -6,6 +6,7 @@ import { SelectModule } from 'primeng/select';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputNumber } from "primeng/inputnumber";
 import { Status } from '@/constants/status';
+import { SaleMethodModel } from '@/models/salemethod';
 
 @Component({
   selector: 'app-salemethod',
@@ -22,10 +23,10 @@ import { Status } from '@/constants/status';
     <p-toolbar class="mb-6">
       <ng-template #start>
         <div class="flex gap-2">
-          <p-button label="Incluir" severity="primary" />
-          <p-button severity="success" label="Salvar" />
-          <p-button severity="warn" label="Cancelar" />
-          <p-button severity="danger" label="Excluir" />
+          <p-button label="Incluir" severity="primary" (click)="cancel()" />
+          <p-button severity="success" label="Salvar" (click)="cancel()" />
+          <p-button severity="warn" label="Cancelar" (click)="cancel()" />
+          <p-button severity="danger" label="Excluir" (click)="cancel()" />
         </div>
       </ng-template>
     </p-toolbar>
@@ -36,22 +37,22 @@ import { Status } from '@/constants/status';
         <div class="flex flex-col md:flex-row gap-6">
           <div class="flex flex-wrap gap-2 w-full">
             <label>Código</label>
-            <p-inputnumber mode="decimal"></p-inputnumber>
+            <p-inputnumber [(ngModel)]="saleMethod.id" mode="decimal"></p-inputnumber>
           </div>
 
           <div class="flex flex-wrap gap-2 w-full">
             <label class="required">Nome</label>
-            <input pInputText />
+            <input [(ngModel)]="saleMethod.name" pInputText />
           </div>
 
           <div class="flex flex-wrap gap-2 w-full">
             <label class="required">Ordem</label>
-            <p-inputnumber showButtons mode="decimal" />
+            <p-inputnumber [(ngModel)]="saleMethod.position" showButtons mode="decimal" />
           </div>
 
           <div class="flex flex-wrap gap-2 w-full">
             <label class="required">Status</label>
-            <p-select [options]="statusValues" />
+            <p-select [(ngModel)]="saleMethod.status" [options]="statusValues" />
           </div>
         </div>
       </div>
@@ -59,5 +60,10 @@ import { Status } from '@/constants/status';
   `
 })
 export class SaleMethod {
+  saleMethod = new SaleMethodModel();
   statusValues = Status.options();
+
+  cancel() {
+    this.saleMethod.default();
+  }
 }

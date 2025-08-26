@@ -6,4 +6,8 @@ export class Status extends BaseConstant {
     inactive: { value: 0, label: "Inativo" },
     deleted: { value: -1, label: "Excluído" }
   };
+
+  static override options() {
+    return [this._values.active, this._values.inactive];
+  }
 }
