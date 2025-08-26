@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "/sale_methods", type: :request do
   let(:valid_attributes) {
-    { name: "Varejo", position: 1, status: StatusConstant.get_value(:active) }
+    { name: "Varejo", position: 1, status: StatusConstant.value(:active) }
   }
 
   let(:invalid_attributes) {
@@ -66,7 +66,7 @@ RSpec.describe "/sale_methods", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { name: "Atacado", position: 2, status: StatusConstant.get_value(:inactive) }
+        { name: "Atacado", position: 2, status: StatusConstant.value(:inactive) }
       }
 
       it "updates the requested sale_method" do
