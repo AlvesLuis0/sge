@@ -46,7 +46,7 @@ class CrudController < ApplicationController
   end
 
   def destroy
-    @resource.update!(status: StatusConstant.get_value(:deleted))
+    @resource.update!(status: StatusConstant.value(:deleted))
   end
 
   protected

@@ -3,7 +3,7 @@
 class CrudRecord < ApplicationRecord
   self.abstract_class = true
 
-  validates :status, inclusion: { in: StatusConstant.all_values.values }
+  validates :status, inclusion: { in: StatusConstant.values }
 
-  default_scope { where.not(status: StatusConstant.get_value(:deleted)) }
+  default_scope { where.not(status: StatusConstant.value(:deleted)) }
 end
